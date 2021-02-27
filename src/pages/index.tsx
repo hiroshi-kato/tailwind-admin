@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import Layout from 'components/Layout';
+import { VFC } from 'react';
 
-const IndexPage = () => (
+const IndexPage: VFC = () => (
   <Layout title="Home | Next.js + TypeScript Example">
     <h1 className="text-4xl">Hello Next.js 👋</h1>
     <p>

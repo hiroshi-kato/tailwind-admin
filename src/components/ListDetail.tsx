@@ -6,7 +6,7 @@ type ListDetailProps = {
   item: User;
 };
 
-const ListDetail = ({ item: user }: ListDetailProps) => (
+const ListDetail: React.VFC<ListDetailProps> = ({ item: user }) => (
   <div>
     <h1>
       Detail for

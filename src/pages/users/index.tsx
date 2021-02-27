@@ -1,5 +1,6 @@
 import { GetStaticProps } from 'next';
 import Link from 'next/link';
+import { VFC } from 'react';
 
 import { User } from '../../interfaces';
 import { sampleUserData } from '../../utils/sample-data';
@@ -10,7 +11,7 @@ type Props = {
   items: User[];
 };
 
-const WithStaticProps = ({ items }: Props) => (
+const WithStaticProps: VFC<Props> = ({ items }) => (
   <Layout title="Users List | Next.js + TypeScript Example">
     <h1>Users List</h1>
     <p>

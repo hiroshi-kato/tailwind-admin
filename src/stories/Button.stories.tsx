@@ -11,8 +11,9 @@ export default {
   },
 } as Meta;
 
-const defaultArgs = {
+const defaultArgs: ButtonProps = {
   children: 'submit',
+  onClick: () => '',
   primary: false,
   size: 'medium' as const,
 };

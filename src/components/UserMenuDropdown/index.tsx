@@ -2,14 +2,11 @@ import { VFC } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import cn from 'classnames';
 
-type MenuItem = {
-  content: string;
-  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-};
+import MenuItem, { MenuItemProps } from './MenuItem';
 
 export type UserMenuDropdownProps = {
   iconUrl: string;
-  menuItems: MenuItem[];
+  menuItems: MenuItemProps[];
 };
 
 const UserMenuDropdown: VFC<UserMenuDropdownProps> = ({
@@ -55,30 +52,7 @@ const UserMenuDropdown: VFC<UserMenuDropdownProps> = ({
             )}
           >
             {menuItems.map((menuItem) => (
-              <Menu.Item>
-                {({ active }) => (
-                  <button
-                    type="button"
-                    role="menuitem"
-                    className={cn('w-full', 'text-left')}
-                    onClick={menuItem.onClick}
-                  >
-                    <div
-                      className={cn(
-                        'py-2',
-                        'px-4',
-                        'text-sm',
-                        'text-gray-700',
-                        {
-                          'bg-gray-100': active,
-                        },
-                      )}
-                    >
-                      {menuItem.content}
-                    </div>
-                  </button>
-                )}
-              </Menu.Item>
+              <MenuItem {...menuItem} />
             ))}
           </Menu.Items>
         </Transition>

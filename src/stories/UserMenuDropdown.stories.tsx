@@ -13,7 +13,7 @@ export default {
   },
 } as Meta;
 
-export const defaultArgs: UserMenuDropdownProps = {
+const defaultArgs: UserMenuDropdownProps = {
   iconUrl:
     'https://avatars.githubusercontent.com/u/25237234?s=460&u=f0fa7ee73d6e6d562a175980de98f4a6e567da93&v=4',
   menuItems: [

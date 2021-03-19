@@ -52,7 +52,7 @@ const UserMenuDropdown: VFC<UserMenuDropdownProps> = ({
             )}
           >
             {menuItems.map((menuItem) => (
-              <MenuItem {...menuItem} />
+              <MenuItem key={menuItem.content} {...menuItem} />
             ))}
           </Menu.Items>
         </Transition>

@@ -27,6 +27,5 @@ Default.args = {
 export const Error = Template.bind({});
 Error.args = {
   ...defaultProps,
-  value: 'example',
   error: 'Your email must use "@"',
 };

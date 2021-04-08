@@ -1,41 +1,32 @@
 import React, { VFC } from 'react';
+import { UseFormRegister } from 'react-hook-form';
 
 export type TextFieldProps = {
-  name: string;
-  id?: string;
-  ref?: React.RefObject<any>;
+  label: string;
+  register: UseFormRegister<any>;
+  required?: boolean;
   placeholder?: string;
-  error?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  isError?: boolean;
 };
 
 const TextField: VFC<TextFieldProps> = ({
-  name,
-  id,
-  ref,
+  label,
+  register,
+  required = false,
   placeholder,
-  error,
-  onChange,
+  isError,
 }) => (
   <>
     <input
       type="text"
-      name={name}
-      id={id}
-      ref={ref}
-      onChange={onChange}
+      {...register(label, { required })}
       placeholder={placeholder}
       className={`shadow-sm block w-full sm:text-sm rounded-md ${
-        error
+        isError
           ? 'border-red-300 text-red-900 placeholder-red-300 focus:outline-none focus:ring-red-500 focus:border-red-500'
           : 'focus:ring-indigo-500 focus:border-indigo-500 border-gray-300'
       } `}
     />
-    {error && (
-      <p className="mt-2 text-sm text-red-600" id="email-error">
-        {error}
-      </p>
-    )}
   </>
 );
 

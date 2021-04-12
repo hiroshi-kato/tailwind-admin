@@ -1,11 +1,9 @@
 import React, { VFC } from 'react';
 import { UseFormRegister } from 'react-hook-form';
 
-export type TextFieldProps = {
+export type TextFieldProps = JSX.IntrinsicElements['input'] & {
   label: string;
   register: UseFormRegister<any>;
-  required?: boolean;
-  placeholder?: string;
   isError?: boolean;
 };
 

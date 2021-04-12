@@ -1,9 +1,10 @@
 import React, { ReactNode, VFC } from 'react';
 import cn from 'classnames';
 
-export type ButtonProps = {
+export type ButtonProps = Partial<JSX.IntrinsicElements['button']> & {
   children: ReactNode;
-  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  type: 'button' | 'submit';
   primary?: boolean;
   size?: 'small' | 'medium' | 'large';
 };
@@ -13,9 +14,10 @@ const Button: VFC<ButtonProps> = ({
   onClick,
   primary = false,
   size = 'medium',
+  type = 'button',
 }): JSX.Element => (
   <button
-    type="button"
+    type={type === 'button' ? 'button' : 'submit'}
     onClick={onClick}
     className={cn(
       'inline-flex',

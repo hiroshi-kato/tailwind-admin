@@ -1,13 +1,19 @@
 import { VFC } from 'react';
 import { useForm, UseFormRegister } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
 import Layout from 'components/Layout';
 import TextForm from 'components/Form/TextForm';
 import Button from 'components/Button';
 
+const schema = yup.object().shape({
+  firstName: yup.string().required(),
+  age: yup.number().positive().integer().required(),
+});
 interface IFormValues {
-  'First Name': string;
-  Age: number;
+  firstName: string;
+  age: number;
 }
 
 type SelectProps = {
@@ -31,7 +37,7 @@ const IndexPage: VFC = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IFormValues>();
+  } = useForm<IFormValues>({ resolver: yupResolver(schema) });
   const onSubmit = (data: IFormValues) => {
     alert(JSON.stringify(data));
   };
@@ -41,12 +47,12 @@ const IndexPage: VFC = () => {
     <Layout>
       <form onSubmit={handleSubmit(onSubmit)}>
         <TextForm
-          label="First Name"
+          label="firstName"
           register={register}
           required
-          error={errors['First Name']}
+          error={errors.firstName}
         />
-        <Select label="Age" register={register} required />
+        <Select label="age" register={register} required />
         <Button type="submit">送信</Button>
         {/* <input type="submit" /> */}
       </form>

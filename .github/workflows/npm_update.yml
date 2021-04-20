@@ -17,13 +17,16 @@ jobs:
       # いずれかのmatrixジョブが失敗した場合にGitHubは進行中のジョブをすべてキャンセルします
       fail-fast: false
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
     steps:
       - uses: actions/checkout@v2
       - name: Set up Node
         # ref: https://github.com/actions/setup-node
         uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: ${{ matrix.node-version }}
       - name: Install dependencies
         run: yarn install
       - name: Settings Git

@@ -13,17 +13,21 @@ on:
 
 jobs:
   create-npm-update:
+    runs-on: ubuntu-latest
+
     strategy:
       # いずれかのmatrixジョブが失敗した場合にGitHubは進行中のジョブをすべてキャンセルします
       fail-fast: false
-    runs-on: ubuntu-latest
+      matrix:
+        node-version: [14.x]
+
     steps:
       - uses: actions/checkout@v2
       - name: Set up Node
         # ref: https://github.com/actions/setup-node
         uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: ${{ matrix.node-version }}
       - name: Install dependencies
         run: yarn install
       - name: Settings Git
@@ -35,11 +39,11 @@ jobs:
         #       https://github.com/github/hub#github-actions
         run: |
           git checkout -b "npm_update_`date +%Y%m%d`"
-          yarn update
+          yarn upgrade
           git add .
           git commit -m ':wrench: Npm Update'
-          git push origin "gem_update_`date +%Y%m%d`"
-          gh pr create -B main -t "🔧 Npm Update `date +%Y-%m-%d`"
+          git push origin "npm_update_`date +%Y%m%d`"
+          gh pr create -B main -b 'hoge' -t "🔧 Npm Update `date +%Y-%m-%d`"
         env:
             GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
       - name: Github Actions notify to Slack

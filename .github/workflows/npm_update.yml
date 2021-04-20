@@ -13,13 +13,14 @@ on:
 
 jobs:
   create-npm-update:
+    runs-on: ubuntu-latest
+
     strategy:
       # いずれかのmatrixジョブが失敗した場合にGitHubは進行中のジョブをすべてキャンセルします
       fail-fast: false
-    runs-on: ubuntu-latest
-    strategy:
       matrix:
         node-version: [14.x]
+
     steps:
       - uses: actions/checkout@v2
       - name: Set up Node

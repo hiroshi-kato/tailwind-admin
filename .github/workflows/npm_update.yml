@@ -1,0 +1,55 @@
+name: NpmUpdate
+
+# https://docs.github.com/ja/actions/reference/events-that-trigger-workflows#scheduled-events
+
+# 注意：ベースブランチの直近のコミットでのみしか実行されない
+
+# 毎週金曜の8時にnpm update のプルリクを作成する
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 8 * * 5'
+
+jobs:
+  create-npm-update:
+    strategy:
+      # いずれかのmatrixジョブが失敗した場合にGitHubは進行中のジョブをすべてキャンセルします
+      fail-fast: false
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Node
+        # ref: https://github.com/actions/setup-node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - name: Install dependencies
+        run: yarn install
+      - name: Settings Git
+        run: |
+          git config --global user.email ${{ secrets.MAIL_ADDRESS }}
+          git config --global user.name ${{ secrets.USER_NAME }}
+      - name: Create npm update pull request
+        # NOTE: hub コマンドがデフォルトで入っているようなのでそのまま使用する
+        #       https://github.com/github/hub#github-actions
+        run: |
+          git checkout -b "npm_update_`date +%Y%m%d`"
+          yarn update
+          git add .
+          git commit -m ':wrench: Npm Update'
+          git push origin "gem_update_`date +%Y%m%d`"
+          gh pr create -B main -t "🔧 Npm Update `date +%Y-%m-%d`"
+        env:
+            GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+      - name: Github Actions notify to Slack
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
+          mention: 'here'  # slackのメンションになる（この設定だと `@here`）
+          if_mention: failure
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: always()

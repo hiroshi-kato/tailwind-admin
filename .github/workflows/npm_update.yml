@@ -43,7 +43,7 @@ jobs:
           git add .
           git commit -m ':wrench: Npm Update'
           git push origin "npm_update_`date +%Y%m%d`"
-          gh pr create -B main -d -b 'hoge' -t "🔧 Npm Update `date +%Y-%m-%d`"
+          gh pr create -B main -b 'hoge' -t "🔧 Npm Update `date +%Y-%m-%d`"
         env:
             GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
       - name: Github Actions notify to Slack

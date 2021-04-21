@@ -35,15 +35,13 @@ jobs:
           git config --global user.email ${{ secrets.MAIL_ADDRESS }}
           git config --global user.name ${{ secrets.USER_NAME }}
       - name: Create npm update pull request
-        # NOTE: hub コマンドがデフォルトで入っているようなのでそのまま使用する
-        #       https://github.com/github/hub#github-actions
         run: |
           git checkout -b "npm_update_`date +%Y%m%d`"
-          yarn upgrade
+          yarn upgrade --latest
           git add .
           git commit -m ':wrench: Npm Update'
           git push origin "npm_update_`date +%Y%m%d`"
-          gh pr create -B main -b 'hoge' -t "🔧 Npm Update `date +%Y-%m-%d`"
+          gh pr create -B main -b 'Please check npm update' -t "🔧 Npm Update `date +%Y-%m-%d`"
         env:
             GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
       - name: Github Actions notify to Slack

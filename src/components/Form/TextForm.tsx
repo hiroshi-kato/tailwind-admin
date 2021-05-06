@@ -3,18 +3,26 @@ import { UseFormRegister, FieldError } from 'react-hook-form';
 import TextField from 'components/TextField';
 
 type TextFormProps = {
+  id: string;
   label: string;
   register: UseFormRegister<any>;
   required?: boolean;
   error?: FieldError;
 };
-const TextForm: VFC<TextFormProps> = ({ label, register, required, error }) => {
+const TextForm: VFC<TextFormProps> = ({
+  id,
+  label,
+  register,
+  required,
+  error,
+}) => {
   const errorMessage = error?.type === 'required' ? '必須項目です' : '';
 
   return (
     <>
-      <label htmlFor="label">{label}</label>
+      <label htmlFor={id}>{label}</label>
       <TextField
+        id={id}
         label={label}
         register={register}
         required={required}

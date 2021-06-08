@@ -37,7 +37,7 @@ jobs:
       - name: Create npm update pull request
         run: |
           git checkout -b "npm_update_`date +%Y%m%d`"
-          yarn upgrade --latest
+          yarn up
           git add .
           git commit -m ':wrench: Npm Update'
           git push origin "npm_update_`date +%Y%m%d`"
